@@ -69,26 +69,26 @@ public class PrintEX {
 		char gender = '남';			// 문자형 2byte
 		boolean javaStudy = true;	// 논리형 1byte
 		
-		//홍길동은 25세 남성으로 키는 212.5cm 이고, 자바 공부 여부 : true
+//		홍길동은 25세 남성으로 키는 212.5cm 이고, 자바 공부 여부 : true
 		System.out.println(name +"은 " + age +"세 " + gender + "성으로 키는 " + height + "cm 이고, 자바 공부 여부 : " + javaStudy);
 		
-		// printf() 버전
+//		printf() 버전
 		System.out.printf("%s은 %d세 %c성으로 키는 %.1fcm 이고, 자바 공부 여부 %b"
 				, name, age, gender, height, javaStudy );
 		
 		System.out.println();
 		System.out.printf("%s/%f", name, height);	//홍길동/212.500000
 		
-		//문자열 6칸 오른쪽정렬
+//		문자열 6칸 오른쪽정렬
 		System.out.println();
 		System.out.printf("%6s/%f", name, height); //ㅁㅁㅁ홍길동/212.500000
 
-		//문자열 6칸 왼쪽정렬
+//		문자열 6칸 왼쪽정렬
 		System.out.println();
 		System.out.printf("%-6s/%f", name, height); //홍길동ㅁㅁㅁ/212.500000
 
-		//소숫점 아래로 1자리
-		// -> 2째 자리에서 반올림
+//		소숫점 아래로 1자리
+//		 -> 2째 자리에서 반올림
 		double num = 1.25;
 		System.out.println();
 		System.out.printf("%s/%.1f", name, num); //홍길동/1.3
