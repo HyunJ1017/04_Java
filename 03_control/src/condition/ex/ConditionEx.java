@@ -454,6 +454,7 @@ public class ConditionEx {
 																(midEx*0.4 + finalEx/2 + task/10) < 95 ? "A" :"A+" )))))));
 		System.out.println("점수 : " + (midEx*0.4 + finalEx/2 + task/10) + " 학점 : " + result3);
 		System.out.println("-----------------------------------");
+		System.out.println(name + "이는 배가고파요");
 		
 		/* 제일 잛아보이는거
 		if(sum >= 90) result = "A" + ( sum>=95 ? "+" : "" );
@@ -523,10 +524,10 @@ public class ConditionEx {
 	public void practice() {
 		System.out.print("점수 입력(국 영 수 사 과) : ");
 		
-		int kor = sc.nextInt(); // 국
-		int eng = sc.nextInt(); // 영
-		int mat = sc.nextInt(); // 수
-		int soc = sc.nextInt(); // 사
+		int kor = sc.nextInt(); // 국 nextInt()는 
+		int eng = sc.nextInt(); // 영 단어 사이에 스페이스 입력하면은
+		int mat = sc.nextInt(); // 수 엔터처럼 다음 입력사항으로
+		int soc = sc.nextInt(); // 사 인식해서 처리 해줌
  		int sci = sc.nextInt(); // 과
  		
 // 		System.out.println(kor);
@@ -537,21 +538,44 @@ public class ConditionEx {
  		
  		String stupid = "";
  		
+ 		
  		if ( kor < 40 ) stupid += "국어";
  		if ( eng < 40 ) stupid += "영어";
  		if ( mat < 40 ) stupid += "수학";
  		if ( soc < 40 ) stupid += "사회";
  		if ( sci < 40 ) stupid += "과학";
  		
- 		double average = (kor + eng + mat + soc + sci) / 5;
+//		강사님풀이
+// 		boolean flag = false;
+// 		String str = "";
+// 		
+// 		if ( kor < 40 ){ flag = true; str+= "국어 ";}
+// 		if ( eng < 40 ){ flag = true; str+= "영어 ";}
+// 		if ( mat < 40 ){ flag = true; str+= "수학 ";}
+// 		if ( soc < 40 ){ flag = true; str+= "사회 ";}
+// 		if ( sci < 40 ){ flag = true; str+= "과학 ";}
+// 		
+// 		if (flag) {	// flag가 논리형 변수, 'flag' == 'flag==true'
+// 					// flag가 한번만 true여도 if문 실행
+// 					// String변수 == "값" 이러면 별로임
+// 			System.out.printf("FAIL  [40점 미만 과목 : %s]", str);
+// 			return;
+// 		}`
  		
- 		if( stupid != "" )
- 		System.out.println("FAIL [40점 미만 과목 : " + stupid + "]");
+ 		// 평균값을 double로 계산하기 위해 (double) 강제형변환 하거나
+ 		// 5를 5.0으로 double로 계산해주면 자동형변환으로 double로 계산된 값이 나옴
+ 		double average = (kor + eng + mat + soc + sci) / 5.0;
  		
- 		if(average >=60) {
-		System.out.print("PASS [점수 : " + average + " / 100]");
+ 		if( stupid != "" ) 
+ 			System.out.println("FAIL [40점 미만 과목 : " + stupid + "]");
+ 		
+ 		
+ 		// average = double, 60 = int
+ 		// 60 -> 60.0 해주면 60을 60.0으로 자동형변환 해주는 연산시간 줄일 수 있음
+ 		if(average >= 60) {
+ 			System.out.print("PASS [점수 : " + average + " / 100]");
 		} else {
-		System.out.print("FAIL [점수 : " + average + " (평균 미달)]");
+			System.out.print("FAIL [점수 : " + average + " (평균 미달)]");
 		}
  		
 	}
