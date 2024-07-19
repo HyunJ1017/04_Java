@@ -458,7 +458,7 @@ public class ArrayPractice {
 			arr[i] = sc.nextLine();
 		}
 		
-		int col = num;	// 첫 배열 길이 저장
+//		int col = num;	// 첫 배열 길이 저장	// 안해놔도됨
 		boolean flag = true;
 		
 		
@@ -475,74 +475,32 @@ public class ArrayPractice {
 			}
 			if(a != 'Y') {
 				System.out.println("다시 입력해 주세요");
-				break;
+				flag = true;
+				continue;
 			}
 			
 			System.out.print("더 입력하고 싶은 개수 : ");
-			int num2 = sc.nextInt();				// 더하고싶은, 추가해야할 배열갯수
+			int num2 = sc.nextInt();								// 더하고싶은, 추가해야할 배열갯수
 
-			String[] arr2 = new String[num + num2];	// 쌔배열
-			System.arraycopy(arr, 0, arr2, 0, num); // arr2에 arr 채우기
-			sc.nextLine();
+			String[] arr2 = new String[arr.length + num2];			// 쌔배열 arr2 [이전 arr길이 + 입력받은값]
+			System.arraycopy(arr, 0, arr2, 0, arr.length); 			// arr2에 arr이 차지할부분 채우기
 			
-			arr = arr2;
-			for (int i = num ; i< num+num2 ; i++ ) {
+			sc.nextLine();
+			for (int i = arr.length ; i< arr.length+num2 ; i++ ) {	//arr2의 나머지 빈곳에 새로운 값 추가
 				System.out.print(i + "번째 문자열 :");
-				String i = sc.nextLine();
-				num++;
+				arr2[i] = sc.nextLine();
 			}
+			arr = arr2;												// arr 참조값을 arr2 주소로 변경
 			
 		} while (flag);
 		/** ********************************************* */
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		// 추가입력 반복
-//		boolean flag = true;
-//		int num2 = 0;	// do문에서 쓸 새 배열길이
-//		int count = num;	// 새 문자열 번호
-//		
-//		do {
-//			System.out.print("더 값을 입력하시겠습니까?(Y/N) : ");
-//			String answer = sc.next();
-//			
-//			char a = answer.charAt(0);
-//			
-//			if(a == 'N') {
-//				flag = false;
-//				continue;
-//			}
-//			if(a != 'Y') {
-//				System.out.println("다시 입력해 주세요");
-//				break;
-//			}
-//			
-//			System.out.print("더 입력하고 싶은 개수 : ");
-//			num2 = sc.nextInt();
-//			
-//			String[] newarr = new String[num2];
-//			sc.nextLine();
-//			for ( int i = 0 ; i < newarr.length ; i++ ) {
-//				System.out.println(count + "번째 문자열 : ");
-//				newarr[i] = sc.nextLine();
-//				count++;					//문자열번호증가
-//				
-//			}
-//			
-//			
-//		} while (flag);
+		System.out.print("[ ");
+		for ( int i = 0 ; i < arr.length ; i++ ) {
+			System.out.print(arr[i]);
+			if( i < arr.length - 1 ) System.out.print(", ");
+		}
+		System.out.println(" ]");
 		
 	}
 }
