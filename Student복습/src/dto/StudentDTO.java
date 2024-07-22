@@ -86,8 +86,13 @@ public class StudentDTO {
 	
 
 	/** 확인용 */
-	public void info() {
-		System.out.printf("이름 : %s / 학번 : %s / 성별 : %c / 국 : %d / 영 : %d / 수 : %d / 사 : %d / 과 : %d\n", name, studentNumber, gender, lan, eng, mat, soc, sic);
+	public String info() {
+		String str ="이름 : " + name + " / 학번 : " + studentNumber + " / 성별 : " + gender + " / 국어 : " + lan + " / 영어 : " + eng + " / 수학 : " + mat + " / 사회 : " + soc + " / 과학 : " + sic;
+		return str;
 	}
 	
+	public String score() {
+		String str ="국어 : " + lan + " / 영어 : " + eng + " / 수학 : " + mat + " / 사회 : " + soc + " / 과학 : " + sic;
+		return str;
+	}
 }
