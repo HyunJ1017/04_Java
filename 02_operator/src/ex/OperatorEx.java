@@ -40,8 +40,10 @@ public class OperatorEx {
 		System.out.print("정수 입력 1 : ");
 		int num1 = sc.nextInt();	// 입력버퍼에 있는 정수를 읽어오고 enter는 남김
 		
+		
 		System.out.print("정수 입력 2 : ");
 		int num2 = sc.nextInt();
+		
 		
 		System.out.println();
 		
@@ -54,7 +56,7 @@ public class OperatorEx {
 		System.out.printf("%d %% %d = %d \n", num1, num2, num1 % num2);
 		// printf 에서 %(나머지) 는 %% | /% 로 작성 해야 함
 		
-		
+		sc.close();
 	}
 	
 	/**
@@ -72,6 +74,7 @@ public class OperatorEx {
 		
 		System.out.printf("%d는 3의 배수인가? %b", input1, isTrue);
 		
+		sc.close();
 	}
 	
 	
@@ -104,6 +107,7 @@ public class OperatorEx {
 		
 		System.out.printf("%d는 %d의 배수가 맞는가? %b", input1, input2, isFalse);
 		
+		superscanner09.close();
 	}
 	
 	
@@ -140,6 +144,8 @@ public class OperatorEx {
 		boolean or = input > 10 || input % 2 != 1;
 		
 		System.out.printf("입력받은 %d가 짝수이거나 10보다 큰가? %b", input, or);
+		
+		sc.close();
 	}
 	
 	
@@ -177,6 +183,8 @@ public class OperatorEx {
 		String result = age <= 13 ? "어린이" : (age >= 20 ? "성인" : "청소년");
 		
 		System.out.println("result : " + result);
+		
+		sc.close();
 		
 	}
 

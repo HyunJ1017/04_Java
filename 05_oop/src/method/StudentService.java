@@ -127,6 +127,8 @@ public class StudentService {
 		//String.toUpperCase() -> 대문자로 변환
 		//String.toLowerCase() -> 소문자로 변환
 		char check = sc.next().toUpperCase().charAt(0);
+		/* String 형일 때 : 'String'.toUpperCase()
+		 * char   형일 때 : Character.toUpperCase('char') */
 		
 		// --> char 형은 비교 가능, String은 참조변수여서 비교 X
 		if(check == 'N') {

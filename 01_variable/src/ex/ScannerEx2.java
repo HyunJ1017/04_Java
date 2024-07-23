@@ -43,6 +43,8 @@ public class ScannerEx2 {
 	System.out.printf("%s은 %d세, 키 %.1fcm의 %c성 입니다.\n", name, age, height, gender);
 	System.out.println("자기소개 : " + introduce);
 	
+	
+	sc.close();
 	}
 
 }

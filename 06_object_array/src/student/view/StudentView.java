@@ -39,13 +39,14 @@ public class StudentView {
 			System.out.println();
 			
 			switch (input) {
-			case 1  : addStudent();  break;
-			case 2  : allStudent();  break;
-			case 3  : selectIndex(); break;
-			case 4  : selectName();  break;
-			case 5  :  break;
-			case 6  :  break;
-			case 7  :  break;
+			case 1  : addStudent();   break;
+			case 2  : allStudent();   break;
+			case 3  : selectIndex();  break;
+			case 4  : selectName();   break;
+			case 5  : updateIndex();  break;
+			case 6  : selectScore();  break;
+			case 7  : selectMaxMin(); break;
+			case 624 : testMaxMin();   break;
 			
 			case 0  : System.out.println("==== 프로그램 종료 ===="  ); break;
 			default : System.out.println("=== 메뉴번호 잘못 입력 ===");
@@ -55,11 +56,6 @@ public class StudentView {
 		
 	}
 	
-	
-	
-
-
-
 
 	/** 학생 추가 화면
 	 * 
@@ -166,4 +162,158 @@ public class StudentView {
 		System.out.println(std.toString());
 	}
 	
+	
+	/**
+	 * 인덱스 번호를 입력받아 일치하는 학생의
+	 * html, css, js, java 점수 수정
+	 * 
+	 * 단, 입력된 인덱스가 0 미만
+	 *     students 배열 마지막 인덱스 초과한 경우
+	 *     "인덱스 범위가 올바르지는 않습니다."
+	 *     
+	 *     정상범위 인덱스 이지만 학생이 존재하지 않는 경우
+	 *     "해당 인덱스에 학생 정보가 존재하지 않습니다" 출력
+	 */
+	private void updateIndex() {
+		
+		System.out.print("\n----- 학생 점수 주성 -----\n");
+		
+		System.out.print("수정할 학생의 인덱스 번호 입력 : ");
+		int index = sc.nextInt();
+		
+		// 입력받은 index가 정상인지 판별
+		// 1 == 범위 초과
+		// 2 == 학생없음
+		// 3 == 정상
+		int check = service.checkIndex(index);
+		
+		if ( check == 1 ) {
+			System.out.println("인덱스 범위가 올바르지는 않습니다.");
+			return;
+		}
+		
+		if ( check == 2 ) {
+			System.out.println("해당 인덱스에 학생 정보가 존재하지 않습니다");
+			return;
+		}
+		
+		/* 학생이 존재하는 경우 */
+		System.out.print("HTML, CSS, JS, Java 순서로 점수 입력 : ");
+		int html = sc.nextInt();
+		int css = sc.nextInt();
+		int js = sc.nextInt();
+		int java = sc.nextInt();
+		
+		// 점수만 담은 용도의 StudentDTO 객체
+		StudentDTO scores = new StudentDTO(html, css, js, java);
+		
+		// 점수 수정 서비스 메서드 콜
+		// 절대 실패할일 없음(인덱스 번호 확인 끝나서)
+		service.updateScores(index, scores);
+		
+	}
+
+
+	/**
+	 * 입력받은 index번째 학생의 점수, 합계, 평균 출력
+	 * 
+	 * 단, 정상 index인지 확인
+	 * 
+	 * ex) 인덱스 입력 : 0
+	 * ------------------------------------
+	 * 이름 : 짱ㄱ
+	 * HTML(80) CSS(70) JS(50) Java(90)
+	 * 합계 : 290
+	 * 평균 : 72.5
+	 * ------------------------------------
+	 */
+	public void selectScore() {
+		System.out.print("\n----- 학생 점수 조회 -----\n");
+		
+		System.out.print("인덱스 입력 : ");
+		int index = sc.nextInt();
+		
+		// 입력받은 index가 정상인지 판별
+		// 1 == 범위 초과
+		// 2 == 학생없음
+		// 3 == 정상
+		int check = service.checkIndex(index);
+		
+		if ( check == 1 ) {
+			System.out.println("인덱스 범위가 올바르지는 않습니다.");
+			return;
+		}
+		
+		if ( check == 2 ) {
+			System.out.println("해당 인덱스에 학생 정보가 존재하지 않습니다");
+			return;
+		}
+		
+		/* 학생이 존재하는 경우 */
+		StudentDTO std = service.selectIndex(index);
+		System.out.println("------------------------------------");
+
+		System.out.println("이름 : " + std.getName());
+		
+		System.out.printf(" HTML(%d) CSS(%d) JS(%d) Java(%d)\n", 
+				std.getHtml(), std.getCss(), std.getJava(), std.getJs() );
+		
+		// 합계
+		int sum = std.getHtml() + std.getCss() + std.getJava() + std.getJs();
+		
+		// 평균
+		double average = sum/4.0;
+		
+		System.out.println("합계 : " + sum );
+		System.out.println("평균 : " + average);
+		
+		System.out.println("------------------------------------");
+		
+	}
+
+
+	/**
+	 * 평균 최고, 최저점 조회하기
+	 * 
+	 * 최고점 : 철수(85.4)
+	 * 최저점 : 짱구(61.5)
+	 */
+	private void selectMaxMin() {
+		System.out.println("\n----- 평균 최고/ 최저점 조회 -----\n");
+		
+		String result = service.selectMaxMin();
+		
+		System.out.println(result);
+		
+	}
+	
+	
+	
+	
+	private void testMaxMin() {
+		
+		// 테스트 코드
+		int[] arr = {50,30,10,70,40};
+		
+		int max = 0;
+		int min = 0;
+		
+		for(int i = 0 ; i < arr.length ; i++) {
+			if (i == 0 ) { // 맨 처음에는요
+				max = arr[i];
+				min = arr[i];
+				continue;
+			}
+			
+			// 최대값을 비교
+			if (arr[i] > max) max = arr[i]; // max에 새로운 최대값 대입
+			if (arr[i] < min) min = arr[i]; // min에 새로운 최소값 대입
+			
+		}
+		
+		System.out.println("max : " + max);
+		System.out.println("min : " + min);
+		
+	}
+
 }

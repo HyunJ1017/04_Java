@@ -22,7 +22,7 @@ public class StudentView {
 			System.out.println("1. 추가 학생 입력"                      );
 			System.out.println("2. 학생 전체 조회"                      );
 			System.out.println("3. 학생 1명 정보 조회(인덱스)"          );
-			System.out.println("4. 학색 검색(이름)"                     );
+			System.out.println("4. 학생 검색(이름)"                     );
 			System.out.println("5. 학생 정보 수정(인덱스)"              );
 			System.out.println("6. 학생 1명 점수 조회(점수, 합계, 평균)");
 			System.out.println("7. 평균 최고점, 최저점 학생"            );
@@ -103,15 +103,19 @@ public class StudentView {
 		System.out.print("이름을 입력 : ");
 		String surchName = sc.nextLine();
 		
-		System.out.println( service.surchName(surchName).info() );
+		
+		String result = "";
+		result = service.searchINfo(service.surchName(surchName));
+				
+		System.out.println( result );
 	}
 	
 	/** 5. 학생 정보 수정(인덱스) */
 	public void updateStudent() {
 		
 		System.out.println("\n=====학생 정보 수정=====\n");
-		System.out.println("변경할 학생의 학번 입력 : ");
-		String selectNumber = sc.nextLine();
+		System.out.println("변경할 학생의 학번 또는 이름 입력 : ");
+		String selectWord = sc.nextLine();
 				
 		System.out.println("\n=====수정할 정보=====\n");
 		System.out.println("1. 학생 이름 수정");
@@ -125,17 +129,17 @@ public class StudentView {
 		int changeNum = 0;
 		
 		switch (choice) {
-			case 1 : changeNum=1; service.update(changeNum, selectNumber); break;
-			case 2 : changeNum=2; service.update(changeNum, selectNumber); break;
-			case 3 : changeNum=3; service.update(changeNum, selectNumber); break;
-			case 4 : updateScore(changeNum, selectNumber); break;
+			case 1 : changeNum=1; service.update(changeNum, selectWord); break;
+			case 2 : changeNum=2; service.update(changeNum, selectWord); break;
+			case 3 : changeNum=3; service.update(changeNum, selectWord); break;
+			case 4 : updateScore(changeNum, selectWord); break;
 			default : System.out.println("번호를 잘못 입력 하셨씁니다."); return;
 		}
 		
 	}
 	
 	/** 5-2 */
-	public void updateScore(int changeNum, String selectNumber) {
+	public void updateScore(int changeNum, String selectWord) {
 		
 		System.out.println("\n=====학생 학점 수정=====\n");
 		System.out.println("1. 국어");
@@ -147,11 +151,11 @@ public class StudentView {
 		int subNum = sc.nextInt();
 		sc.nextLine();
 		switch (subNum) {
-			case 1 : changeNum=4; service.update(changeNum, selectNumber); break;
-			case 2 : changeNum=5; service.update(changeNum, selectNumber); break;
-			case 3 : changeNum=6; service.update(changeNum, selectNumber); break;
-			case 4 : changeNum=7; service.update(changeNum, selectNumber); break;
-			case 5 : changeNum=8; service.update(changeNum, selectNumber); break;
+			case 1 : changeNum=4; service.update(changeNum, selectWord); break;
+			case 2 : changeNum=5; service.update(changeNum, selectWord); break;
+			case 3 : changeNum=6; service.update(changeNum, selectWord); break;
+			case 4 : changeNum=7; service.update(changeNum, selectWord); break;
+			case 5 : changeNum=8; service.update(changeNum, selectWord); break;
 			default : System.out.println("번호를 잘못 입력 하셨씁니다."); return;
 		}
 	}
@@ -164,7 +168,7 @@ public class StudentView {
 		String surchName = sc.nextLine();
 		
 		System.out.println("점수 : " + service.surchName(surchName).score());
-		System.out.println("합계 : " + (int)service.avg( service.surchName(surchName) ) * 5 );
+		System.out.println("합계 : " + (int)( service.avg( service.surchName(surchName) )*5.0 ) );
 		System.out.println("평균 : " + service.avg( service.surchName(surchName) ));
 		
 		

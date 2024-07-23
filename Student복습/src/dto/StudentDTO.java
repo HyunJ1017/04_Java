@@ -12,12 +12,20 @@ public class StudentDTO {
 	private int    soc;
 	private int    sic;
 	
+	public static final int MAX_SCORE = 100;
+	public static final int MIN_SCORE =   0;
+	
 	// 생성자
 	public StudentDTO(String name, String studentNumber, char gender) {
 		this.name = name;
 		this.studentNumber = studentNumber;
 		this.gender = gender;
 	}
+//	public StudentDTO() {
+//		name = "temp";
+//		studentNumber = "00000";
+//		gender = '0';
+//	} // 주소저장용
 
 	//메서드
 	public String getName() {
@@ -87,7 +95,7 @@ public class StudentDTO {
 
 	/** 확인용 */
 	public String info() {
-		String str ="이름 : " + name + " / 학번 : " + studentNumber + " / 성별 : " + gender + " / 국어 : " + lan + " / 영어 : " + eng + " / 수학 : " + mat + " / 사회 : " + soc + " / 과학 : " + sic;
+		String str ="이름 : " + name + " / 학번 : " + studentNumber + " / 성별 : " + gender + "\n  국어 : " + lan + " / 영어 : " + eng + " / 수학 : " + mat + " / 사회 : " + soc + " / 과학 : " + sic + "\n";
 		return str;
 	}
 	

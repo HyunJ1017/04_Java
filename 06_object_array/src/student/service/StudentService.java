@@ -114,6 +114,92 @@ public class StudentService {
 		}
 		return null;
 	}
+
+	/**
+	 * 전달받은 index 가 students 범위 내인지
+	 *  + 정상범위라면 해당 index가 학생 객체를 참조하는지 확인
+	 * @param index
+	 * @return
+	 * 	// 입력받은 index가 정상인지 판별
+		// 1 == 범위 초과
+		// 2 == 학생없음
+		// 3 == 정상
+	 */
+	public int checkIndex(int index) {
+		if ( index < 0 || index >= students.length ) return 1;
+		if ( students[index] == null ) return 2;
+		return 3;
+	}
+
+
+	/**
+	 * 전달받은 [index]번째 학생의 점수 수정
+	 * @param index
+	 * @param scores
+	 */
+	public void updateScores(int index, StudentDTO scores) {
+		
+		// students[index]의 주소를 s에 얕은복사
+		StudentDTO s = students[index];
+		
+		s.setHtml( scores.getHtml() );
+		s.setCss ( scores.getCss()  );
+		s.setJava( scores.getJava() );
+		s.setJs  ( scores.getJs()   );
+		
+	}
+
+	/**
+	 * 평균 최고/최저 구하기
+	 * 
+	 * @return
+	 * 최고점 : 철수(85.4)
+	 * 최저점 : 짱구(61.5)
+	 */
+	public String selectMaxMin() {
+		int length = 0;
+		for (int i = 0; i < students.length ; i++) {
+			if ( students[i] == null ) break;
+			length++;
+		}
+		
+		String maxName = "";
+		String minName = "";
+		int max = Integer.MIN_VALUE;
+		int min = Integer.MAX_VALUE;
+		
+		for (int i = 0; i < length ; i++) {
+			
+			/* 강사님 풀이
+			 * if(students[i] == null) break; 쓰고 향상된for문씀
+			 *  */
+			
+			int temp = students[i].getHtml()+
+			students[i].getCss()+
+			students[i].getJs()+
+			students[i].getJava();
+			
+			// 체대값
+			if (max < temp) {
+				max = temp;
+				maxName = students[i].getName();
+			}
+			// 채소값
+			if (min > temp) {
+				min = temp;
+				minName = students[i].getName();
+			}
+			
+		}
+		
+		double maxAverage = max/4.0;
+		double minAverage = min/4.0;
+		
+		String result = String.format("최고점 : %s(%.1f)\n최저점 : %s(%.1f)\n", 
+				maxName, maxAverage, minName, minAverage);
+		
+		return result;
+	}
 	
 	
 }

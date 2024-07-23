@@ -40,5 +40,6 @@ public class ScannerEx {
 	    
 	    System.out.println("i + j = " + (i + j));
 	    
+	    sc.close();
 	}
 }

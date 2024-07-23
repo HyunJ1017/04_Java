@@ -67,13 +67,12 @@ public class StudentService {
 	/**
 	 * 인덱스로 학생 검색
 	 * @param index
-	 * @return
+	 * @return String Infomation
 	 */
 	public String selectService(int index) {
 		
 		if (index < 0 || index >= students.length ) return "검색할 수 없는 번호입니다.";
 		if (students[index] == null ) return "검색할 수 없는 번호입니다.";
-		
 		
 		return students[index].info();
 		
@@ -81,137 +80,173 @@ public class StudentService {
 
 	/**
 	 * 이름으로 학생 검색
-	 * @param surchName
-	 * @return
+	 * return StudentDTO
 	 */
 	public StudentDTO surchName(String surchName) {
-		for (StudentDTO std : students ) {
-			if ( std.getName().equals(surchName) ) {
-				return std;
+		StudentDTO result = null;
+		
+		for (StudentDTO std : students) {
+			if(std.getName().equals(surchName)) {
+				result = std;
+				break;
 			} else {
 				return null;
 			}
 		}
-		return null;
+		return result;
+	}
+	
+	/** 학생 정보 검색
+	 *  StudentDTO => String*/
+	public String searchINfo(StudentDTO std) {
+		String infomation = "";
+		
+		if (std == null) {
+			infomation = "학생을 찾을 수 없습니다.";
+		} else {
+			infomation = std.info();
+		}
+		
+		return infomation;
 	}
 
 	/** 정보수정*/
-	public void update(int changeNum, String selectNumber) {
+	public void update(int changeNum, String selectWord) {
 		
+		// 비교길이 구하기
+		int length = 0;
+		for (int i = 0 ; i < students.length ; i++) {
+			if(students[i] == null) {
+				length = i;
+				break;
+				}
+		}
 		
 		int index = -1;
-		for ( int i = 0 ; i < students.length ; i++) {
-			if (students[i].getStudentNumber().equals(selectNumber)) {
+		for ( int i = 0 ; i < length ; i++) {	// 학번검색
+			if (students[i].getStudentNumber().equals(selectWord)) {
 				index = i;
 				break;
 			} 
-				
 		}
 		
 		
-		if (index == -1) {
-			System.out.println("\n***학번 입력이 잘못되었습니다.***");
+		for ( int i = 0 ; i < length ; i++ ) { 				// 이름검색
+			if ( students[i].getName().equals(selectWord) ) {
+				index = i;
+				break;
+			}
+		}
+		
+		
+		
+		if (index == -1) {	// 학번검색오류
+			System.out.println("\n***학생 식별자 입력이 잘못되었습니다.***");
 			return;
 		}
 		
-
+		
+		/** 점수입력받기 */
+		int newScore = -1;
+		switch(changeNum) {
+			case 4,5,6,7,8 :
+				sc.nextLine();
+				System.out.print("수정할 점수 : ");
+				String inputScore = sc.nextLine();
+				if(!isNaN(inputScore)) {
+					System.out.println("***>정수를 입력해 주세세요***\n");
+					return;
+				}
+				newScore = Integer.parseInt(inputScore);
+				
+				if(newScore > 100) newScore = 100;
+				if(newScore <   0) newScore =   0;
+				break;
+		}
+		
 		boolean flag = false;
 		
 		switch(changeNum) {
 		
-		case 1 : 
+			case 1 : 
+				
+				System.out.print("수정할 이름 : ");
+				String name = sc.nextLine();
+				
+				students[index].setName(name);
+				
+				flag = true;
+				break;
+				
+			case 2 : 
+				
+				System.out.print("수정할 학번 : ");
+				String studentNumber = sc.nextLine();
+				
+				students[index].setStudentNumber(studentNumber);
+				
+				flag = true;
+				break;
+				
+			case 3 : 
+				
+				System.out.print("수정할 성별 : ");
+				char gender = sc.next().charAt(0);
+				
+				students[index].setGender(gender);
+				
+				flag = true;
+				break;
+				
+			case 4 : 
+				
+				students[index].setLan(newScore);
+				
+				flag = true;
+				break;
+				
+			case 5 : 
+				
+				students[index].setEng(newScore);
+				
+				flag = true;
+				break;
+				
+			case 6 : 
+				
+				students[index].setMat(newScore);
+				
+				flag = true;
+				break;
+				
+			case 7 : 
+				
+				students[index].setSoc(newScore);
+				
+				flag = true;
+				break;
+				
+			case 8 : 
+				
+				students[index].setSic(newScore);
+				
+				flag = true;
+				break;
+				
 			
-			System.out.print("수정할 이름 : ");
-			String name = sc.nextLine();
-			
-			students[index].setName(name);
-			
-			flag = true;
-			break;
-			
-		case 2 : 
-			
-			System.out.print("수정할 학번 : ");
-			String studentNumber = sc.nextLine();
-			
-			students[index].setStudentNumber(studentNumber);
-			
-			flag = true;
-			break;
-			
-		case 3 : 
-			
-			System.out.print("수정할 성별 : ");
-			char gender = sc.next().charAt(0);
-			
-			students[index].setGender(gender);
-			
-			flag = true;
-			break;
-			
-		case 4 : 
-			
-			System.out.print("국어점수 : ");
-			int socreLan = sc.nextInt();
-			
-			students[index].setLan(socreLan);
-			
-			flag = true;
-			break;
-			
-		case 5 : 
-			
-			System.out.print("영어점수 : ");
-			int socreEng = sc.nextInt();
-			
-			students[index].setEng(socreEng);
-			
-			flag = true;
-			break;
-			
-		case 6 : 
-			
-			System.out.print("수학점수 : ");
-			int socreMat = sc.nextInt();
-			
-			students[index].setMat(socreMat);
-			
-			flag = true;
-			break;
-			
-		case 7 : 
-			
-			System.out.print("사회점수 : ");
-			int socreSoc = sc.nextInt();
-			
-			students[index].setSoc(socreSoc);
-			
-			flag = true;
-			break;
-			
-		case 8 : 
-			
-			System.out.print("과학점수 : ");
-			int socreSic = sc.nextInt();
-			
-			students[index].setSic(socreSic);
-			
-			flag = true;
-			break;
-			
-		
-		default : System.out.println("프로그램오류");
+			default : System.out.println(">>>>>ALERT<<<<<");
 		}
 		
 		if(flag) {
-			System.out.println("***변경이 완료되었습니다***");
+			System.out.println("\n***변경이 완료되었습니다***");
 		} else {
-			System.out.println("***정보를 변경할 수 없습니다***");
+			System.out.println("\n***정보를 변경할 수 없습니다***");
 		}
 		
 		
 	}
 	
+
 	/** 6. 학생 1명 점수 조회(점수, 합계, 평균) */
 	public double avg(StudentDTO std) {
 		int lan = std.getLan();
@@ -260,6 +295,15 @@ public class StudentService {
 		System.out.println("최저점 학생 : " + students[minIndex].getName() );
 		System.out.println("최저점 평균 : " + avg( students[minIndex] ) );
 		
+	}
+	
+	public boolean isNaN(String num) {
+		try {
+			Integer.parseInt(num);
+			return true;
+		} catch(NumberFormatException e) {
+			return false;
+		}
 	}
 
 }

@@ -19,6 +19,17 @@ public class StudentDTO {
 	}
 
 	
+	// 점수운반용생성자
+	public StudentDTO(int html, int css, int js, int java) {
+		super();
+		this.html = html;
+		this.css = css;
+		this.js = js;
+		this.java = java;
+	}
+
+
+
 	/** getter / setter */
 	
 	public String getStudentNumber() {
