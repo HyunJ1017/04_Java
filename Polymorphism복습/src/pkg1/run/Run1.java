@@ -98,6 +98,7 @@ public class Run1 {
 		System.out.println("-------------------");
 		
 		System.out.println(carArr[4].inform());
+		System.out.println(carArr[2].getClass());
 		System.out.println(carArr[4].getClass());
 		System.out.println(carArr[5].getClass());
 //		System.out.println(((Sonata)carArr[5]).getCoast());
