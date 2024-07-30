@@ -8,7 +8,14 @@ public class Run {
 
 		Service service = new Service();
 		
-		service.test1();
+//		service.test1();
+//		service.test1_1();
+//		int[] arr = {1, 2, 3, 4, 5};
+//		service.test2(arr);
+		service.test3();
+		
+		
+		
 		
 	}
 
