@@ -99,8 +99,6 @@ public class Service {
 			answer[i]=count;
 		}
         
-        
-        
         for(int a : answer) {
         	System.out.print(a+", ");
         }
