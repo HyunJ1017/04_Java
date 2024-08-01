@@ -1,8 +1,10 @@
 package pkg2.service;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +27,10 @@ public class ObjectService {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
+		List<Member> members = null;
+		
+		Member member = null;
+		
 		try {
 		
 			br = new BufferedReader(new InputStreamReader(System.in));
@@ -40,22 +46,34 @@ public class ObjectService {
 			
 			int age = Integer.parseInt(ageString);
 			
-			Member member = new Member(id, pw, name, age);
+			member = new Member(id, pw, name, age);
 			
+			members = new ArrayList<Member>();
 			/*없으면 만들기*/
 			String folderPath = "/io_test/test1";
 			File f = new File(folderPath);
 			
 			if ( !f.exists() ) f.mkdirs();
 			
+			File j = new File(folderPath + "/Member.dat");
+			if ( !j.exists() ) {
+				j.createNewFile();
+				throw new NullPointerException();
+			}
 			
+			/**가져오기는 미리 생성했어야함
+			 * 파일이 없을때 새로운 배열만 만들어서 참조시키면
+			 * 마지막에 output으로 저장만 하면됨*/
 			/*가져오기*/
 			
 			fis = new FileInputStream(folderPath + "/Member.dat");
 			ois = new ObjectInputStream(fis);
 			
+			
 			@SuppressWarnings("unchecked")
-			List<Member> members = (List<Member>)ois.readObject();
+			List<Member> n = (List<Member>) ois.readObject() ;
+					
+			members = n;
 			
 			/*추가하기*/
 			members.add(member);
@@ -66,6 +84,42 @@ public class ObjectService {
 			
 			oos.writeObject(members);
 			
+			System.out.println("작업이 잘 된것 같습니다.");
+			
+		} catch ( NullPointerException e ) {
+			System.out.println("** NullPointerException 실행 **");
+			
+			String folderPath = "/io_test/test1";
+			File f = new File(folderPath);
+			
+			if ( !f.exists() ) f.mkdirs();
+			
+			
+			members = new ArrayList<Member>();
+			
+			members.add(member);
+			
+			try {
+				fos = new FileOutputStream(folderPath + "/Member.dat");
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(members);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (Exception b ) {
+				System.out.println("** 오류 발생 **");
+				e.printStackTrace();
+			} finally {
+				try {
+					if(oos!=null)oos.close();
+				} catch (IOException a) {
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+			System.out.println("작업이 잘 된것 같습니다.");
+						
 			System.out.println("작업이 잘 된것 같습니다.");
 			
 		} catch (ClassNotFoundException e) {

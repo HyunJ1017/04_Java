@@ -6,7 +6,8 @@ public class ObjectRun {
 	public static void main(String[] args) {
 		
 		ObjectService service = new ObjectService();
-		
+//		int input = 0;
+//		do {}while();
 //		service.createMember(); // 처음하니까 아무것도 없다고 오류남
 		// 아깐 됬잔아 ㅜㅜ
 		// List 비어있으면 아무것도 안됨..;
