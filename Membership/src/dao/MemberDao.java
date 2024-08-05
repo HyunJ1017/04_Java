@@ -33,6 +33,8 @@ public interface MemberDao {
 	 * @throws IOException
 	 */
 	void saveFile() throws IOException;
+
+	boolean addMoney(String targetPhone, int money) throws IOException;
 	
 	
 	

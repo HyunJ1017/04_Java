@@ -29,6 +29,10 @@ public interface MemberService {
 	 * @return memberList
 	 */
 	public abstract List<Member> getMemberList();
+
+	public abstract List<Member> searchName(String searchName);
+
+	public abstract boolean addMoney(String targetPhone, int money) throws IOException;
 	
 	
 	

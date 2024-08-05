@@ -57,8 +57,8 @@ public class MemberView {
 				
 				case 2 : selectAll(); break;
 				
-				case 3 : break;
-				case 4 : break;
+				case 3 : search(); break;
+				case 4 : updateAmount(); break;
 				case 5 : break;
 				case 6 : break;
 				case 0 : System.out.println("\n==== 프로그램 종료 ===="); break;
@@ -178,10 +178,87 @@ public class MemberView {
 		}
 	}
 	
+	//------------------------------------
+	/* [ 3. 이름 검색하기 ] */
 	
+	/**
+	 * 이름, 일부라도 포함하는 것 다가져와서 출력
+	 * @throws IOException 
+	 */
+	private void search() throws IOException {
+		
+		System.out.println("\\n---- 회원 전체 조회 ----\\n");
+		
+		System.out.print  ("검색 : ");
+		String searchName = br.readLine();
+		
+		List<Member> searchList = service.searchName(searchName);
+		
+		if(searchList.isEmpty()) {
+			System.out.println("검색결과를 찾을 수 없습니다.");
+			return;
+		}
+		
+		String[] gradeArr = {"일반", "골드", "다이아"};
+		
+		System.out.printf("%-6s %-12s %8s %5s\n","[이름]","[PH]","[누적금액]","[등급]");
+		
+		int count = 1;
+		for(Member member : searchList) {
+			System.out.printf("%d) %-6s %-12s %8d %5s\n",	// -는 왼쪽정렬, 양수는 오른쪽정렬
+					count, member.getName(), member.getPhone(), member.getAmount(), gradeArr[member.getGrade()]);
+			count++;
+		}
+		
+	}
 	
+	//--------------------------------------------------------------
+	/* [ 4. 금액 입력하기 ] */
 	
-	
+	/**
+	 * 이름을 입력받고 일치하는 이름들을 받아와
+	 * 이름목록에서 원하는 인덱스번호를 누르고
+	 * dao에서 전화번호를 보내 해당 전화번호의
+	 * 누적금액 추가 및 회원등급을 수정
+	 * @throws IOException 
+	 */
+	private void updateAmount() throws IOException {
+		
+		System.out.println("\\n---- 금액 누적하기 ----\\n");
+		
+		System.out.print  ("검색 : ");
+		String searchName = br.readLine();
+		
+		List<Member> searchList = service.searchName(searchName);
+		
+		if(searchList.isEmpty()) {
+			System.out.println("검색결과를 찾을 수 없습니다.");
+			return;
+		}
+		
+		String[] gradeArr = {"일반", "골드", "다이아"};
+		
+		System.out.printf("%-6s %-12s %8s %5s\n","[이름]","[PH]","[누적금액]","[등급]");
+		
+		int count = 1;
+		for(Member member : searchList) {
+			System.out.printf("%d) %-6s %-12s %8d %5s\n",	// -는 왼쪽정렬, 양수는 오른쪽정렬
+					count, member.getName(), member.getPhone(), member.getAmount(), gradeArr[member.getGrade()]);
+			count++;
+		}
+		
+		System.out.print  ("선택번호 : ");
+		String index = br.readLine();
+		
+		String targetPhone = searchList.get(Integer.parseInt(index)-1).getPhone();
+		
+		System.out.print  ("누적시킬금액 : ");
+		int money = Integer.parseInt(br.readLine());
+		
+		boolean result = service.addMoney(targetPhone, money);
+		
+		if(result) System.out.println("완료되었습니다.");
+	}
 	
 	
 	

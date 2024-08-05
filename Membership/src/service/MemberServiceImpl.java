@@ -2,6 +2,7 @@ package service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.MemberDao;
@@ -64,6 +65,37 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Member> getMemberList() {
 		return dao.getMemberList();
+	}
+	
+	/**
+	 * 이름검색 후 일치하는 회원들을
+	 * List화 해서 반납
+	 */
+	@Override
+	public List<Member> searchName(String searchName) {
+		
+		List<Member> resultList = new ArrayList<Member>();
+		
+		List<Member> memberList = dao.getMemberList();
+		
+		for(Member member : memberList) {
+			if(member.getName().contains(searchName)) {
+				resultList.add(member);
+			}
+		}
+		
+		return resultList;
+	}
+	
+	
+	/**
+	 * 사용금액누적
+	 * return 성공true/실패false
+	 * @throws IOException 
+	 */
+	@Override
+	public boolean addMoney(String targetPhone, int money) throws IOException {
+		return dao.addMoney(targetPhone,money);
 	}
 	
 }

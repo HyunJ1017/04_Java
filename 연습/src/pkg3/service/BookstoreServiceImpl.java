@@ -1,6 +1,7 @@
 package pkg3.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import pkg3.dto.Book;
 public class BookstoreServiceImpl implements BookstoreService {
 	
 	BookstoreDao dao = null;
+	BufferedReader br = null;
 	
 	public BookstoreServiceImpl() throws FileNotFoundException, ClassNotFoundException, IOException {
 		dao = new BookstoreDaoImpl();
@@ -42,11 +44,24 @@ public class BookstoreServiceImpl implements BookstoreService {
 	public String removeBook(String serialNumber) throws FileNotFoundException, IOException {
 		
 		List<Book> bookList = dao.getBookList();
-		
 		for(int i = 0; i<bookList.size() ; i++) {
 			if( bookList.get(i).getSerialNumber().equals(serialNumber) ) {
 				dao.removeBook(i);
 				return "제거 완료";
+			}
+		}
+		
+		return "해당하는 번호의 책이 없습니다";
+	}
+	
+	/*------------------------------------------------------------------------*/
+	@Override
+	public String searchBook(String serialNumber) throws FileNotFoundException, IOException {
+		
+		List<Book> bookList = dao.getBookList();
+		for(int i = 0; i<bookList.size() ; i++) {
+			if( bookList.get(i).getSerialNumber().equals(serialNumber) ) {
+				return bookList.get(i).getName();
 			}
 		}
 		
@@ -65,45 +80,61 @@ public class BookstoreServiceImpl implements BookstoreService {
 	@Override
 	public boolean addManyBook(String inputPath) {
 		
-		/**------------------------------------------------*/
-//		FileReader fr = null;
-//		BufferedReader br = null;
-//		
-//		try {
-//			// 스트림 객체 생성
-//			fr = new FileReader("/io_test/char/문자테스트.txt");
-//			br = new BufferedReader(fr);
-//			
-//			// String br.readLine()
-//			// -> 한 줄을 읽어오는데
-//			//    없으면 null이 반환됨
-//			// -> \n은 읽어오지 않음...
-//			
-//			String line = null; // 읽어올 한 줄을 저장할 변수
-//			StringBuilder sb = new StringBuilder();
-//			while (true) {
-//				line = br.readLine();
-//				
-//				// 읽어온 내용이 없다면 반복 종료
-//				if (line == null) break;
-//				
-//				sb.append(line);
-//				sb.append("\n");
-//			}
-//			
-//			System.out.println(sb.toString());
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if(br!=null)br.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		BufferedReader br = null;
 		
-		/**---------------------------------------------------------------*/
+		final String TEXT_PATH = inputPath;
+		File newfile = new File(inputPath);
+		if(!newfile.exists()) {
+			System.out.println("해당 파일을 찾을 수 없습니다.");
+			return false;
+		}
+		
+		
+		try {
+			// 스트림 객체 생성
+			br = new BufferedReader(new FileReader(TEXT_PATH));
+			
+			// String br.readLine()
+			// -> 한 줄을 읽어오는데
+			//    없으면 null이 반환됨
+			// -> \n은 읽어오지 않음...
+			int count = 1;
+			
+			while (true) {
+				
+				String line1 = null; // 읽어올 핫 줄을 저장할 변수
+				String line2 = null; // 읽어올 둘 줄을 저장할 변수
+				String line3 = null; // 읽어올 셋 줄을 저장할 변수
+				
+				
+				StringBuilder sb = new StringBuilder();
+				
+				line1 = br.readLine();
+				line2 = br.readLine();
+				line3 = br.readLine();
+				
+				// 읽어온 내용이 없다면 반복 종료
+				if (line1 == null && line2 == null && line3 == null) break;
+				
+				boolean result = addBook(line1, line2, Integer.parseInt(line3));
+				
+				System.out.println(count + "번째 책 추가 : " + result);
+				count++;
+				
+			}
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(br!=null)br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return false;
 	}
 	

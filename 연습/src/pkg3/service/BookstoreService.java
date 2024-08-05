@@ -23,10 +23,12 @@ public interface BookstoreService {
 	List<Book> getBookList();
 
 
+	String searchBook(String serialNumber) throws FileNotFoundException, IOException;
 
 	String removeBook(String serialNumber) throws FileNotFoundException, IOException;
 
 	boolean addManyBook(String inputPath);
+
 
 
 }

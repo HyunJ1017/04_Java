@@ -96,6 +96,46 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 	
+	/**
+	 * 식변번호(전화번호)를 입력받아
+	 * 대당되는 회원의
+	 * 누적금액 추가 및 등급변경
+	 * @throws IOException 
+	 */
+	@Override
+	public boolean addMoney(String targetPhone, int money) throws IOException {
+		
+		for(Member member : memberList) {
+			if(member.getPhone().equals(targetPhone)) {
+				member.setAmount(member.getAmount()+money);
+				updateGrade(targetPhone);
+				break;
+			}
+		}
+		
+		saveFile();
+		return true;
+	}
+	
+	/**
+	 * 등급최신화
+	 */
+	private void updateGrade(String targetPhone) {
+		for(Member member : memberList) {
+			if(member.getPhone().equals(targetPhone)) {
+				if(member.getAmount() < 100000) {
+					member.setGrade(0);
+					break;
+				}else if(member.getAmount() < 1000000){
+					member.setGrade(1);
+					break;
+				}else {
+					member.setGrade(2);
+				}
+				break;
+			}
+		}
+	}
 	
 
 }

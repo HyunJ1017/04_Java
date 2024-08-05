@@ -63,13 +63,13 @@ public class BookstoreView {
 	public int mainView() throws NumberFormatException, IOException {
 		System.out.println("\n==== 책장정리하기 ====\n");
 		
-		System.out.println("1. 책 추가");
-		System.out.println("2. 책 전체 확인");
-		System.out.println("3. 책 삭제하기");
+		System.out.println("1. 책 추가"         );
+		System.out.println("2. 책 전체 확인"    );
+		System.out.println("3. 책 삭제하기"     );
 		System.out.println("4. 책 많이 추가하기");
 		
 		
-		System.out.println("0. 프로그램 종료");
+		System.out.println("0. 프로그램 종료"   );
 		
 		System.out.print("메뉴 입력 >> ");
 		int input = Integer.parseInt(br.readLine());
@@ -123,7 +123,7 @@ public class BookstoreView {
 	}
 	
 	//-------------------------------------------------------------------
-	/*책 전부 보기*/
+	/*책 삭제인가*/
 	
 	/**
 	 * S/N 입력 받아서 일치하는책 목록에서 지우기
@@ -135,13 +135,22 @@ public class BookstoreView {
 		System.out.print("삭제할 책의 시리얼 번호를 입력 하세요\nS/N : ");
 		String serialNumber = br.readLine();
 		
-		String result = service.removeBook(serialNumber);
+		String search = service.searchBook(serialNumber);
 		
-		System.out.println(result);
+		System.out.printf("[%s] 을 정말로 삭제 합니까? (Y/N)", search);
+		String answer = br.readLine();
+		
+		if(answer.equals("Y")) {
+		String result2 = service.removeBook(serialNumber);
+		System.out.println(result2);
+		}else {
+			System.out.println("취소되었습니다.");
+		}
+		
 	}
 	
 	//-------------------------------------------------------------------
-	/*책 전부 보기*/
+	/*책 많이추가 하기*/
 	
 	/**
 	 * 추가하기 귀찮으니까
