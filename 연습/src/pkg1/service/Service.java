@@ -1,5 +1,8 @@
 package pkg1.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Service {
@@ -358,17 +361,76 @@ public class Service {
 	 */
 	public int[][] solution(int[] num_list, int n) {
         
-        int l = num_list.length;
-        int[][] answer = new int[l/n][n];
+        int m = num_list.length/n;
+        int[][] answer = new int[m][n];
+        int index = 0;
+        for(int x=0; x<m; x++){
+            for(int y=0; y<n; y++){
+                answer[x][y]=num_list[index];
+                index++;
+            }
+        }
         
-        int i =0;
-        do{
-        	for(int y =0; y<l/n; y++) {
-        		int[][] answer
-        	}
+        return answer;
+    }
+	
+	
+	/**문자열 my_string이 매개변수로 주어집니다. 
+	 * my_string은 소문자, 대문자, 자연수로만 구성되어있습니다. 
+	 * my_string안의 자연수들의 합을 return하도록 solution 함수를 완성해주세요.
+	 * "aAb1B2cC34oOp"	== 37
+	 * "1a2b3c4d123Z"	== 133
+	 */
+	public void solution34(String my_string) {
+		my_string = "aaa111";
+        int answer = 0;
+        
+        my_string += "A";	// 끝이 자연수면 마지막 숫자가 삽입 안됨
+        char[] str = my_string.toCharArray();
+        
+        int index = 0;
+        StringBuilder numbers= new StringBuilder();
+        
+        while(index<str.length) {
+        	int num = (int)str[index] - 48;
         	
-        	i++;
-        } while (i*n<l);
+            if(num < 10 && num >= 0){
+                // 숫자인경우
+                numbers.append(num+"");
+            }else{
+                // 숫자가 아닌경우
+            	if(numbers.length() != 0) answer += Integer.parseInt(numbers.toString());
+                numbers = new StringBuilder();
+            }
+            index++;
+        }
+        
+        
+        System.out.println(answer+"");
+    }
+	
+	
+	/**문자열 before와 after가 매개변수로 주어질 때, 
+	 * before의 순서를 바꾸어 after를 만들 수 있으면 1을, 
+	 * 만들 수 없으면 0을 return 하도록 solution 함수를 완성해보세요.
+	 * before="olleh"; after="hello";	answer=1; "olleh"의 순서를 바꾸면 "hello"를 만들 수 있습니다.
+	 * before="allpe"; after="apple";	answer=0; "allpe"의 순서를 바꿔도 "apple"을 만들 수 없습니다.
+	 */
+	public int solution35(String before, String after) {
+		before="allpe"; after="apple";
+        int answer = 1;
+        
+        char[] before2 = before.toCharArray();
+        char[] after2 = after.toCharArray();
+        
+        Arrays.sort(before2);
+        Arrays.sort(after2);
+        
+        for (int index=0; index<before.length(); index++) {
+        	if((before2[index]+"").equals(after2[index]+"") ) {
+        		answer = 0;
+        	}
+        }
         
         return answer;
     }
